@@ -39,7 +39,9 @@ def Play(board: list[list[int]] , row_count: int , column_count: int) -> str:
 
         print(GameBoard(board, row_count, column_count))
 
-        answer = AskInput_str("In which direction would you like to play ? (z or 8 = top / q or 4 = left / s or 2 = down / d or 6 = right)", "zqsd8426")
+        answer = AskInput_str("In which direction would you like to play ? (z or 8 = top / q or 4 = left / s or 2 = down / d or 6 = right)", "zqsd8426").replace("z", "8").replace("q", "4").replace("s", "2").replace("d", "6").replace("8", "1-1").replace("4", "0-1").replace("2", "11").replace("6", "01")
+
+        Movement(board, row_count, column_count, int(answer[0]), int(answer[1:]))
 
         break
 
@@ -94,6 +96,24 @@ def Place_Number(board: list[list[int]] , row_count: int , column_count: int):
     chances: list[float] = [0.9, 0.1]
 
     board[bot_row][bot_column] = ChoiceWithChances(numbers, chances, 1)
+
+
+
+
+
+def Movement(board: list[list[int]] , row_count: int , column_count: int , user_axis: int , user_direction: int):
+    """
+    Description
+    """
+
+    index1: int ; index2: int
+
+    for index1 in range([row_count, column_count][user_axis]):
+
+        for index2 in range([column_count, row_count][user_axis]):
+
+            3-
+            pass
 
 
 

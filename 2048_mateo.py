@@ -204,11 +204,7 @@ def ShiftVerification(board_start: list[list[int]] , board_end: list[list[int]] 
     
     Shift(board_start, row_count, column_count, user_axis, user_direction)
 
-    if board_start == board_end:
-        return True
-
-    else:
-        return False
+    return board_start == board_end
 
 
 

@@ -194,63 +194,70 @@ def Movement(board: list[list[int]] , row_count: int , column_count: int , user_
 
 
 
-# def Movement(board: list[list[int]] , board_merged: list[list[bool]] , row_count: int , column_count: int , user_axis: int , user_direction: int , row_index: int , column_index: int) -> int:
-#     """
-#     Description
-#     """
+def ShiftVerification(board_start: list[list[int]] , board_end: list[list[int]] , user_axis: int , user_direction: int):
+    """
+    Description
+    """
 
-#     new_row_index: int = row_index
-#     new_column_index: int = column_index
-#     moved: int = 0
-
-#     while True:
-
-#         new_row_index += (user_axis * user_direction)
-#         new_column_index += ((1 - user_axis) * user_direction)
-
-#         if not (0 <= new_row_index < row_count and 0 <= new_column_index < column_count):
-#             break
-        
-#         if board[new_row_index][new_column_index] != 0:
-
-#             if board[new_row_index][new_column_index] == board[row_index][column_index] and not board_merged[new_row_index][new_column_index]:
-
-#                 board[new_row_index][new_column_index] *= 2
-#                 board[row_index][column_index] = 0
-#                 board_merged[new_row_index][new_column_index] = True
-#                 moved += 1
-            
-#             break
-        
-#         moved += 1
+    row_count: int = len(board_start)
+    column_count: int = len(board_start[0])
     
-#     new_row_index = new_row_index - (user_axis * user_direction)
-#     new_column_index = new_column_index - ((1 - user_axis) * user_direction)
+    Shift(board_start, row_count, column_count, user_axis, user_direction)
 
-#     if [new_row_index, new_column_index] != [row_index, column_index]:
-#         board[new_row_index][new_column_index] = board[row_index][column_index]
-#         board[row_index][column_index] = 0
-#         return moved
+    if board_start == board_end:
+        return True
 
-
-
-
-
-# Shift(
-#     [
-#         [2, 0, 0, 0],
-#         [2, 0, 0, 0],
-#         [2, 0, 0, 0],
-#         [2, 0, 0, 0]
-#     ],
-#     4,
-#     4,
-#     0,
-#     1
-# )
+    else:
+        return False
 
 
 
 
 
+def HardCodeBoardTry():
+    """
+    Description
+                [0, 0, 0, 0], # 
+    """
+
+    to_verify: list[list] = [
+        [
+            [2, 0, 0, 0], # The 2 on the left should go on the right
+            [2, 0, 0, 2], # The 2 on the left should merge with the 2 on the right
+            [2, 2, 0, 0], # The 2s on the left should merge together and the right
+            [2, 0, 2, 2], # The 2s on the right should merge and the 2 on the left should move to their left
+            [4, 0, 2, 2], # The 2s on the right should merge and the 4 on the left should not merge with them and only move to their left
+            [2, 2, 2, 2], # Both 2s on the right and 2s on the left should to merge (but not together after already merging)
+            [4, 2, 0, 0], # Both 4 and 2 should to move
+            [2, 0, 4, 2], # The 2 on the left isn't supposed to merge with the 2 on the right because there's a 4 in the middle
+            [0, 0, 0, 2], # Nothing is supposed to move
+        ],
+        [
+            [0, 0, 0, 2],
+            [0, 0, 0, 4],
+            [0, 0, 0, 4],
+            [0, 0, 2, 4],
+            [0, 0, 4, 4],
+            [0, 0, 4, 4],
+            [0, 0, 4, 2],
+            [0, 2, 4, 2],
+            [0, 0, 0, 2],
+        ],
+        0,
+        1,
+    ]
+
+    for loop in range(4):
+        to_verify[0] = TableTurnLeft(to_verify[0])
+        to_verify[1] = TableTurnLeft(to_verify[1])
+        to_verify[2] = 1 - loop%2
+        to_verify[3] = 2*(loop//2) - 1
+        print("To the " + ["top", "left", "bottom", "right"][loop] + " : " + str(ShiftVerification(*deepcopy(to_verify))))
+
+
+
+
+
+
+# HardCodeBoardTry()
 if __name__ == "__main__": StartGame()

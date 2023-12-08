@@ -160,17 +160,28 @@ def ChoiceWithChances(choices: list , chances: list[float] , precision: int = 2)
     Description
     """
 
-    random: int = randint(1, 10**precision) / 10**precision
+    random: int = randint(1, 10) / 10
     minimum: float = 0.0
     maximum: float = 0.0
 
-    for loop in range(len(chances)):
+    for loop in range(len(choices)):
 
         maximum += chances[loop]
 
         if minimum < random <= maximum:
             break
-
+        
         minimum += chances[loop]
     
     return choices[loop]
+
+
+
+
+
+def TableTurnLeft(table: list[list]) -> list[list]:
+    """
+    Description
+    """
+
+    return [[table[row][len(table[0])-1-column] for row in range(len(table))] for column in range(len(table[0]))]
